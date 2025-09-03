@@ -1,0 +1,100 @@
+import { useState } from "react";
+
+const SignUp = () => {
+    const [getOpt, setgetOpt] = useState(false);
+
+    const getOTP = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setgetOpt(true);
+    };
+
+    const submitHendler = async () => {
+
+    }
+
+    const [username, setusername] = useState("");
+    const [dob, setdob] = useState("");
+    const [email, setemail] = useState("");
+    const [otp, setotp] = useState("");
+
+    return (
+        <div className="w-full h-screen flex justify-center items-center">
+            <div className="w-2/5 flex items-center justify-center flex-col">
+                <div className="absolute top-10 left-10 text-4xl flex items-center justify-center font-bold">
+                    <img
+                        src="./icon4x.png"
+                        alt=""
+                        className="w-10 h-10 mr-5"
+                    />
+                    HD
+                </div>
+                <div className="flex items-start justify-center flex-col gap-8">
+                    <div>
+                        <h1 className="text-4xl font-bold mb-2">Sign Up</h1>
+                        <p className="text-gray-600">
+                            Sign up to enjoy the feature of HD
+                        </p>
+                    </div>
+                    <form
+                        action=""
+                        className="flex flex-col gap-4"
+                    >
+                        <input
+                            type="text"
+                            placeholder="yourname"
+                            className="w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF]"
+                            value={username}
+                            onChange={(e) => setusername(e.target.value)}
+                        />
+                        <input
+                            type="date"
+                            placeholder="Date of Birth"
+                            className="w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF]"
+                            value={dob}
+                            onChange={(e) => setdob(e.target.value)}
+                        />
+                        <input
+                            placeholder="Email"
+                            type="text"
+                            className="w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF]"
+                            value={email}
+                            onChange={(e) => setemail(e.target.value)}
+                        />
+
+                        <input
+                            placeholder="OTP"
+                            type="text"
+                            className={`w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF] ${
+                                getOpt ? "flex" : "hidden"
+                            } `}
+                            value={otp}
+                            onChange={(e) => setotp(e.target.value)}
+                        />
+
+                        <button
+                            className="w-80 h-12 border-2 text-[#FFFFFF] border-[#367AFF] rounded-lg bg-[#367AFF]"
+                            onClick={getOpt ? (e) => getOTP(e) : (e) => submitHendler(e)}
+                        >
+                            {getOpt ? "Get OTP" : "Submit"}
+                        </button>
+                    </form>
+                    <p className="text-gray-800">
+                        Already have an account??{" "}
+                        <a href="/signin">
+                            <u className="text-[#367AFF]">Sign in</u>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div className="md:w-3/5 w-0 h-full md:flex hidden">
+                <img
+                    src="./windows.jpg"
+                    alt=""
+                    className="items-center h-full object-cover p-5 box-border rounded-[40px]"
+                />
+            </div>
+        </div>
+    );
+};
+
+export default SignUp;
