@@ -4,37 +4,41 @@ import userModel from "../models/userModel";
 
 interface CustomJwtPayload extends Request {
     id: string;
+    email: string;
 }
 
 interface RequestWithUser extends Request {
     user?: any;
+    email?: string;
 }
 
-export const authMiddleware = async (
+export const otpMiddleware = async (
     req: RequestWithUser,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const token = await req.cookies.token;
-
-        if (!token)
-            return res
-                .status(401)
-                .send({ success: false, message: "Please Login first" });
-
+        const otptoken = req.cookies.otptoken;
+        console.log(otptoken,"token")
+        if (!otptoken)
+            return res.status(401).send({
+                success: false,
+                message: "token not found",
+            });
+        
         const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET as string
-        ) as CustomJwtPayload;
+            otptoken,
+            process.env.JWT_OTP_SECRET as string
+        ) as string | CustomJwtPayload;
+        
 
-        if (!decoded)
+        if (typeof decoded === "string" || !decoded.email) {
             return res.status(400).send({
                 success: false,
-                message: "token is not valid",
+                message: "invalid token payload",
             });
-        req.user = await userModel.findById(decoded.id);
-
+        }
+        req.email = decoded.email;
         next();
     } catch (error) {
         console.log(error);

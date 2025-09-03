@@ -3,19 +3,24 @@ import { useState } from "react";
 
 const SignUp = () => {
     const [getOpt, setgetOpt] = useState(false);
+    const [username, setusername] = useState("");
+    const [dateOfBirth, setdateOfBirth] = useState("");
+    const [email, setemail] = useState("");
+    const [otp, setotp] = useState("");
 
-    const getOTP = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const getOTP = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setgetOpt(true);
-    };
-
-    const submitHendler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
         const respose = await axios
-            .post("http://localhost:4000/api/v1/user/register", {
-                firstName: "Fred",
-                lastName: "Flintstone",
-            })
+            .post(
+                "http://localhost:4000/api/v1/user/register",
+                {
+                    username,
+                    dateOfBirth,
+                    email,
+                },
+                { withCredentials: true }
+            )
             .then(function (response) {
                 console.log(response);
             })
@@ -26,10 +31,24 @@ const SignUp = () => {
         console.log(respose);
     };
 
-    const [username, setusername] = useState("");
-    const [dob, setdob] = useState("");
-    const [email, setemail] = useState("");
-    const [otp, setotp] = useState("");
+    const submitHendler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const respose = await axios
+            .post("http://localhost:4000/api/v1/user/checkotp", {
+                username,
+                dateOfBirth,
+                email,
+                otp,
+            },{withCredentials: true})
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        console.log(respose);
+    };
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
@@ -64,8 +83,8 @@ const SignUp = () => {
                             type="date"
                             placeholder="Date of Birth"
                             className="w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF]"
-                            value={dob}
-                            onChange={(e) => setdob(e.target.value)}
+                            value={dateOfBirth}
+                            onChange={(e) => setdateOfBirth(e.target.value)}
                         />
                         <input
                             placeholder="Email"

@@ -3,7 +3,7 @@ import mongoose ,{Document, Schema} from 'mongoose'
 export interface IUser extends Document {
   username: string;
   email: string;
-  password: string;
+  dateOfBirth: string;
   notes: mongoose.Types.ObjectId[];
 }
 
@@ -16,9 +16,9 @@ const userSchema = new Schema<IUser>({
         type: String,
         required: true,
     },
-    password: {
+    dateOfBirth:{
         type: String,
-        required: true,
+        require: true,
     },
     notes: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -10,10 +10,10 @@ const app = express();
 const PORT = 4000;
 
 var corsOptions = {
-    origin: "*",
+    origin: "http://localhost:5173",
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
+    credentials: true
 };
 
 dbConnection();

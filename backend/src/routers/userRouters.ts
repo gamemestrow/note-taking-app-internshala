@@ -1,32 +1,37 @@
 import express from "express";
 import {
+    checkotpController,
     deleteUserContoller,
-    updateUserContoller,
+    otpRegistrationController,
+    // updateUserContoller,
     userLoginController,
     userRegistrationContoller,
-    updatePasswordController,
-    resetPasswordController,
-    checkotpController,
-    setPasswordController,
+    // updatePasswordController,
+    // resetPasswordController,
+    // checkotpController,
+    // setPasswordController,
 } from "../controllers/userControllers";
 import { createNoteController } from "../controllers/noteContollers";
 import { authMiddleware } from "../middlewares/authMiddleware";
+import { otpMiddleware } from "../middlewares/otpMiddleware";
 
 const router = express.Router();
 
-router.post("/register", userRegistrationContoller);
+router.post("/register", otpRegistrationController);
+
+router.post("/checkotp",otpMiddleware ,checkotpController );
 
 router.post("/login", userLoginController, createNoteController);
 
-router.put("/update", authMiddleware, updateUserContoller)
+// router.put("/update", authMiddleware, updateUserContoller)
 
-router.patch("/updatepassword", authMiddleware, updatePasswordController)
+// router.patch("/updatepassword", authMiddleware, updatePasswordController)
 
-router.post("/resetpassword", resetPasswordController)
+// router.post("/resetpassword", resetPasswordController)
 
-router.post("/checkotp", checkotpController)
+// router.post("/checkotp", checkotpController)
 
-router.post("/setpassword", setPasswordController)
+// router.post("/setpassword", setPasswordController)
 
 router.delete("/delete", authMiddleware, deleteUserContoller)
 
