@@ -10,7 +10,7 @@ interface CustomJwtPayload extends JwtPayload {
 }
 
 interface RequestWithUser extends Request {
-  user?: CustomJwtPayload; 
+  user?: CustomJwtPayload;
 }
 
 export const createNoteController = async (req: RequestWithUser, res: Response) => {

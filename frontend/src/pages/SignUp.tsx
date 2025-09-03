@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 const SignUp = () => {
@@ -8,9 +9,22 @@ const SignUp = () => {
         setgetOpt(true);
     };
 
-    const submitHendler = async () => {
+    const submitHendler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const respose = await axios
+            .post("http://localhost:4000/api/v1/user/register", {
+                firstName: "Fred",
+                lastName: "Flintstone",
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
-    }
+        console.log(respose);
+    };
 
     const [username, setusername] = useState("");
     const [dob, setdob] = useState("");
@@ -73,9 +87,13 @@ const SignUp = () => {
 
                         <button
                             className="w-80 h-12 border-2 text-[#FFFFFF] border-[#367AFF] rounded-lg bg-[#367AFF]"
-                            onClick={getOpt ? (e) => getOTP(e) : (e) => submitHendler(e)}
+                            onClick={
+                                getOpt
+                                    ? (e) => submitHendler(e)
+                                    : (e) => getOTP(e)
+                            }
                         >
-                            {getOpt ? "Get OTP" : "Submit"}
+                            {getOpt ? "Submit" : "Get OTP"}
                         </button>
                     </form>
                     <p className="text-gray-800">
