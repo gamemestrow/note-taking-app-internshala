@@ -5,7 +5,9 @@ import {
     otpRegistrationController,
     // updateUserContoller,
     userLoginController,
-    userRegistrationContoller,
+    otpSignInController,
+    getUserController,
+    // userRegistrationContoller,
     // updatePasswordController,
     // resetPasswordController,
     // checkotpController,
@@ -17,11 +19,15 @@ import { otpMiddleware } from "../middlewares/otpMiddleware";
 
 const router = express.Router();
 
+router.get("/",authMiddleware, getUserController)
+
 router.post("/register", otpRegistrationController);
 
 router.post("/checkotp",otpMiddleware ,checkotpController );
 
-router.post("/login", userLoginController, createNoteController);
+router.post("/signin", userLoginController);
+
+router.post("/checkotpsignin", otpMiddleware, otpSignInController);
 
 // router.put("/update", authMiddleware, updateUserContoller)
 

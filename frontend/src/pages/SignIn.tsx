@@ -1,8 +1,55 @@
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+    const [getOpt, setgetOpt] = useState(false);
+    const [email, setemail] = useState("");
+    const [otp, setotp] = useState("");
 
-    const getOTP = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const navigate = useNavigate();
+
+    const getOTP = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        setgetOpt(true);
+        const response = await axios
+            .post(
+                "http://localhost:4000/api/v1/user/signin",
+                {
+                    email,
+                },
+                { withCredentials: true }
+            )
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        console.log(response)
+    };
+
+    const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post(
+                "http://localhost:4000/api/v1/user/checkotpsignin",
+                {
+                    email,
+                    otp,
+                },
+                { withCredentials: true }
+            );
+
+            if (response.data.success) {
+                navigate("/");
+            }
+            
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -20,7 +67,7 @@ const SignIn = () => {
                     <div>
                         <h1 className="text-4xl font-bold mb-2">Sign In</h1>
                         <p className="text-gray-600">
-                            Please login to continue to your account.
+                            Sign up to enjoy the feature of HD
                         </p>
                     </div>
                     <form
@@ -31,28 +78,36 @@ const SignIn = () => {
                             placeholder="Email"
                             type="text"
                             className="w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF]"
+                            value={email}
+                            onChange={(e) => setemail(e.target.value)}
                         />
 
                         <input
                             placeholder="OTP"
                             type="text"
-                            className="w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF]"
+                            className={`w-80 h-12 border-2 border-gray-400 rounded-lg pr-3 pl-3 focus:border-[#367AFF] ${
+                                getOpt ? "flex" : "hidden"
+                            } `}
+                            value={otp}
+                            onChange={(e) => setotp(e.target.value)}
                         />
-
-                        <a href="#" className="text-[#367AFF]"><u>Resend OTP</u></a>
-                        
-                        <span><input type="checkbox" name="" id="" className="inline mr-2" />Keep me logged in</span>
 
                         <button
                             className="w-80 h-12 border-2 text-[#FFFFFF] border-[#367AFF] rounded-lg bg-[#367AFF]"
-                            onClick={(e) => getOTP(e)}
+                            onClick={
+                                getOpt
+                                    ? (e) => submitHandler(e)
+                                    : (e) => getOTP(e)
+                            }
                         >
-                            Sign In
+                            {getOpt ? "Submit" : "Get OTP"}
                         </button>
                     </form>
                     <p className="text-gray-800">
-                        Need an account? 
-                        <a href="/signup"><u className="text-[#367AFF]">Create one</u></a>
+                        Don't have an account? Create one {" "}
+                        <a href="/signup">
+                            <u className="text-[#367AFF]">Sign Up</u>
+                        </a>
                     </p>
                 </div>
             </div>

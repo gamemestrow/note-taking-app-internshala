@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
     const [getOpt, setgetOpt] = useState(false);
@@ -8,10 +9,12 @@ const SignUp = () => {
     const [email, setemail] = useState("");
     const [otp, setotp] = useState("");
 
+    const navigate = useNavigate();
+
     const getOTP = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setgetOpt(true);
-        const respose = await axios
+         await axios
             .post(
                 "http://localhost:4000/api/v1/user/register",
                 {
@@ -22,32 +25,37 @@ const SignUp = () => {
                 { withCredentials: true }
             )
             .then(function (response) {
-                console.log(response);
+                return response;
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-        console.log(respose);
+        
     };
 
-    const submitHendler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const respose = await axios
-            .post("http://localhost:4000/api/v1/user/checkotp", {
-                username,
-                dateOfBirth,
-                email,
-                otp,
-            },{withCredentials: true})
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
 
-        console.log(respose);
+        try {
+            const response = await axios.post(
+                "http://localhost:4000/api/v1/user/checkotp",
+                {
+                    username,
+                    dateOfBirth,
+                    email,
+                    otp,
+                },
+                { withCredentials: true }
+            );
+
+            if (response.data.success) {
+                navigate("/");
+            }
+            
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -108,7 +116,7 @@ const SignUp = () => {
                             className="w-80 h-12 border-2 text-[#FFFFFF] border-[#367AFF] rounded-lg bg-[#367AFF]"
                             onClick={
                                 getOpt
-                                    ? (e) => submitHendler(e)
+                                    ? (e) => submitHandler(e)
                                     : (e) => getOTP(e)
                             }
                         >

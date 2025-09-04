@@ -15,6 +15,7 @@ interface RequestWithUser extends Request {
 
 export const createNoteController = async (req: RequestWithUser, res: Response) => {
     try {
+        
         if(!req.user || !req.user.email) return res.status(400).send({
             success: false,
             message: 'user not found',

@@ -19,7 +19,6 @@ export const otpMiddleware = async (
 ) => {
     try {
         const otptoken = req.cookies.otptoken;
-        console.log(otptoken,"token")
         if (!otptoken)
             return res.status(401).send({
                 success: false,
@@ -30,7 +29,6 @@ export const otpMiddleware = async (
             otptoken,
             process.env.JWT_OTP_SECRET as string
         ) as string | CustomJwtPayload;
-        
 
         if (typeof decoded === "string" || !decoded.email) {
             return res.status(400).send({
@@ -38,6 +36,7 @@ export const otpMiddleware = async (
                 message: "invalid token payload",
             });
         }
+
         req.email = decoded.email;
         next();
     } catch (error) {
