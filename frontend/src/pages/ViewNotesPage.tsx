@@ -22,7 +22,6 @@ const ViewNotesPage = () => {
             );
 
             setnote(getNoteDetail.data.notes);
-            console.log(getNoteDetail);
         }
 
         getuser();
