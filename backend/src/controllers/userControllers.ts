@@ -30,7 +30,7 @@ export const getUserController = async (
 ) => {
     try {
         const userid = req.user?.id;
-        const user = await userModel.findById(userid).populate("notes")
+        const user = await userModel.findById(userid).populate("notes");
         return res.status(200).send({
             success: true,
             user,
@@ -174,12 +174,13 @@ export const checkotpController = async (
     }
 };
 
-export const userSignOutController = async (req: Request,
-    res: Response) => {
-        console.log(req.cookies.token)
-        console.log("object")
-        res.clearCookie("token")
-    }
+export const userSignOutController = async (req: Request, res: Response) => {
+    res.clearCookie("token");
+    res.status(200).send({
+        success: true,
+        message: "user signed out",
+    });
+};
 
 // export const userRegistrationContoller = async (
 //     req: Request,

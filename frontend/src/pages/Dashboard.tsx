@@ -107,7 +107,12 @@ const Dashboard = () => {
                         href="#"
                         className="text-xl md:text-2xl text-[#367AFF]"
                     >
-                        <u onClick={signOutUserFunction}>
+                        <u
+                            onClick={() => {
+                                signOutUserFunction();
+                                navigate("/signin")
+                            }}
+                        >
                             <b>Sign Out</b>
                         </u>
                     </a>

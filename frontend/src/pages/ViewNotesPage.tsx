@@ -54,7 +54,12 @@ const ViewNotesPage = () => {
                         >
                             <b>Back</b>
                         </u>
-                        <u onClick={signOutUserFunction}>
+                        <u
+                            onClick={() => {
+                                signOutUserFunction();
+                                navigate("/signin");
+                            }}
+                        >
                             <b>Sign Out</b>
                         </u>
                     </a>
