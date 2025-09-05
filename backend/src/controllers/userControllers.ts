@@ -174,6 +174,13 @@ export const checkotpController = async (
     }
 };
 
+export const userSignOutController = async (req: Request,
+    res: Response) => {
+        console.log(req.cookies.token)
+        console.log("object")
+        res.clearCookie("token")
+    }
+
 // export const userRegistrationContoller = async (
 //     req: Request,
 //     res: Response

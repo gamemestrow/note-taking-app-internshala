@@ -7,6 +7,7 @@ import {
     userLoginController,
     otpSignInController,
     getUserController,
+    userSignOutController,
     // userRegistrationContoller,
     // updatePasswordController,
     // resetPasswordController,
@@ -28,6 +29,8 @@ router.post("/checkotp",otpMiddleware ,checkotpController );
 router.post("/signin", userLoginController);
 
 router.post("/checkotpsignin", otpMiddleware, otpSignInController);
+
+router.get("/signout", authMiddleware, userSignOutController)
 
 // router.put("/update", authMiddleware, updateUserContoller)
 

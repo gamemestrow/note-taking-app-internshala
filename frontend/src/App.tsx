@@ -3,6 +3,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ViewNotesPage from "./pages/ViewNotesPage";
 
 const App = () => {
     return (
@@ -23,6 +24,15 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/viewnote"
+                    element={
+                        <ProtectedRoute>
+                            <ViewNotesPage />
                         </ProtectedRoute>
                     }
                 />

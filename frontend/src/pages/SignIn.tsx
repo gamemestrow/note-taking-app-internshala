@@ -12,7 +12,7 @@ const SignIn = () => {
     const getOTP = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setgetOpt(true);
-        const response = await axios
+        await axios
             .post(
                 "http://localhost:4000/api/v1/user/signin",
                 {
@@ -26,8 +26,6 @@ const SignIn = () => {
             .catch(function (error) {
                 console.log(error);
             });
-
-        console.log(response)
     };
 
     const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {

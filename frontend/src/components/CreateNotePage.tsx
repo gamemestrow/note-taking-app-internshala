@@ -12,7 +12,7 @@ interface CreateNotePageProps {
 const CreateNotePage = ({noteTitle, setnoteTitle, noteBody, setnoteBody, submitHandler}: CreateNotePageProps) => {
     return (
         <div>
-            <div className="w-full h-screen p-10 md:p-10 md:pr-40 md:pl-40  flex flex-col gap-10">
+            <div className="flex md:hidden flex-col gap-10 w-full h-screen p-10 md:p-10 md:pr-40 md:pl-40 ">
                 <input
                     value={noteTitle}
                     onChange={(e) => setnoteTitle(e.target.value)}
